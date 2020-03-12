@@ -51,6 +51,10 @@ class TermSet {
     return new Set(this.index.values())
   }
 
+  keys () {
+    return this.values()
+  }
+
   [Symbol.iterator] () {
     return this.values()[Symbol.iterator]()
   }
