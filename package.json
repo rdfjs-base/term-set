@@ -1,6 +1,6 @@
 {
   "name": "@rdfjs/term-set",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Set for RDFJS Terms",
   "main": "index.js",
   "scripts": {
