@@ -5,9 +5,7 @@ class TermSet {
     this.index = new Map()
 
     if (terms) {
-      for (const term of terms) {
-        this.add(term)
-      }
+      this.addMany(terms)
     }
   }
 
@@ -23,6 +21,14 @@ class TermSet {
     }
 
     this.index.set(key, term)
+
+    return this
+  }
+
+  addMany (terms) {
+    for (const term of terms) {
+      this.add(term)
+    }
 
     return this
   }

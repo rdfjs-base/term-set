@@ -63,6 +63,35 @@ describe('@rdfjs/term-set', () => {
     })
   })
 
+  describe('.addMany', () => {
+    it('should be a method', () => {
+      const termset = new TermSet()
+
+      expect(typeof termset.addMany).toBe('function')
+    })
+
+    it('should add the given terms to the index', () => {
+      const terms = [
+        rdf.namedNode('http://example.org/1/'),
+        rdf.namedNode('http://example.org/2/')
+      ]
+      const termset = new TermSet()
+
+      termset.addMany(terms)
+
+      expect([...termset.index.values()]).toEqual(terms)
+    })
+
+    it('should return the TermSet itself', () => {
+      const terms = [rdf.namedNode('http://example.org/')]
+      const termset = new TermSet()
+
+      termset.addMany(terms)
+
+      expect(termset.addMany(terms)).toBe(termset)
+    })
+  })
+
   describe('.clear', () => {
     it('should be a method', () => {
       const termset = new TermSet()
