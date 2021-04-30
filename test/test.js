@@ -1,26 +1,26 @@
-/* global describe, expect, it */
-
+const { strictEqual } = require('assert')
 const rdf = require('@rdfjs/data-model')
 const { termToNTriples } = require('@rdfjs/to-ntriples')
+const { describe, it } = require('mocha')
 const TermSet = require('..')
 
 describe('@rdfjs/term-set', () => {
   it('should be a constructor', () => {
-    expect(typeof TermSet).toBe('function')
+    strictEqual(typeof TermSet, 'function')
   })
 
   describe('.size', () => {
     it('should be a number property', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.size).toBe('number')
+      strictEqual(typeof termset.size, 'number')
     })
 
     it('should return the size of the index', () => {
       const term = rdf.namedNode('http://example.org/')
       const termset = new TermSet([term])
 
-      expect(termset.size).toBe(1)
+      strictEqual(termset.size, 1)
     })
   })
 
@@ -28,7 +28,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.add).toBe('function')
+      strictEqual(typeof termset.add, 'function')
     })
 
     it('should add the given term to the index', () => {
@@ -37,8 +37,8 @@ describe('@rdfjs/term-set', () => {
 
       termset.add(term)
 
-      expect([...termset.index.values()][0]).toBe(term)
-      expect([...termset.index.keys()][0]).toBe(termToNTriples(term))
+      strictEqual([...termset.index.values()][0], term)
+      strictEqual([...termset.index.keys()][0], termToNTriples(term))
     })
 
     it('should keep the term if another one with the same N-Triple representation is added', () => {
@@ -49,8 +49,8 @@ describe('@rdfjs/term-set', () => {
       termset.add(term0)
       termset.add(term1)
 
-      expect(termset.index.size).toBe(1)
-      expect(term0.equals([...termset.index.values()][0])).toBe(true)
+      strictEqual(termset.index.size, 1)
+      strictEqual(term0.equals([...termset.index.values()][0]), true)
     })
 
     it('should return the Termset itself', () => {
@@ -59,7 +59,7 @@ describe('@rdfjs/term-set', () => {
 
       termset.add(term)
 
-      expect(termset.add(term)).toBe(termset)
+      strictEqual(termset.add(term), termset)
     })
   })
 
@@ -67,7 +67,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.clear).toBe('function')
+      strictEqual(typeof termset.clear, 'function')
     })
 
     it('should clear the index', () => {
@@ -76,7 +76,7 @@ describe('@rdfjs/term-set', () => {
 
       termset.clear()
 
-      expect(termset.index.size).toBe(0)
+      strictEqual(termset.index.size, 0)
     })
   })
 
@@ -84,7 +84,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.delete).toBe('function')
+      strictEqual(typeof termset.delete, 'function')
     })
 
     it('should delete the given term', () => {
@@ -94,22 +94,22 @@ describe('@rdfjs/term-set', () => {
 
       termset.delete(term1)
 
-      expect(termset.index.size).toBe(1)
-      expect(term0.equals([...termset.index.values()][0])).toBe(true)
+      strictEqual(termset.index.size, 1)
+      strictEqual(term0.equals([...termset.index.values()][0]), true)
     })
 
     it('should return true if the given term was deleted', () => {
       const term = rdf.namedNode('http://example.org/')
       const termset = new TermSet([term])
 
-      expect(termset.delete(term)).toBe(true)
+      strictEqual(termset.delete(term), true)
     })
 
     it('should return false if the given term was not deleted', () => {
       const term = rdf.namedNode('http://example.org/')
       const termset = new TermSet()
 
-      expect(termset.delete(term)).toBe(false)
+      strictEqual(termset.delete(term), false)
     })
   })
 
@@ -117,7 +117,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.entries).toBe('function')
+      strictEqual(typeof termset.entries, 'function')
     })
 
     it('should return an iterator that contains an array element [term, term] for each term', () => {
@@ -127,11 +127,11 @@ describe('@rdfjs/term-set', () => {
 
       const entries = [...termset.entries()]
 
-      expect(entries.length).toBe(2)
-      expect(term0.equals(entries[0][0])).toBe(true)
-      expect(term0.equals(entries[0][1])).toBe(true)
-      expect(term1.equals(entries[1][0])).toBe(true)
-      expect(term1.equals(entries[1][1])).toBe(true)
+      strictEqual(entries.length, 2)
+      strictEqual(term0.equals(entries[0][0]), true)
+      strictEqual(term0.equals(entries[0][1]), true)
+      strictEqual(term1.equals(entries[1][0]), true)
+      strictEqual(term1.equals(entries[1][1]), true)
     })
   })
 
@@ -139,7 +139,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.forEach).toBe('function')
+      strictEqual(typeof termset.forEach, 'function')
     })
 
     it('should loop over all terms in insertion order', () => {
@@ -152,9 +152,9 @@ describe('@rdfjs/term-set', () => {
         terms.push(term)
       })
 
-      expect(terms.length).toBe(2)
-      expect(term0.equals(terms[0])).toBe(true)
-      expect(term1.equals(terms[1])).toBe(true)
+      strictEqual(terms.length, 2)
+      strictEqual(term0.equals(terms[0]), true)
+      strictEqual(term1.equals(terms[1]), true)
     })
   })
 
@@ -162,7 +162,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.has).toBe('function')
+      strictEqual(typeof termset.has, 'function')
     })
 
     it('should return true if the Termset contains the given term', () => {
@@ -170,7 +170,7 @@ describe('@rdfjs/term-set', () => {
       const term1 = rdf.namedNode('http://example.org/1')
       const termset = new TermSet([term0, term1])
 
-      expect(termset.has(term1)).toBe(true)
+      strictEqual(termset.has(term1), true)
     })
 
     it('should return false if the Termset does not contain the given term', () => {
@@ -178,7 +178,7 @@ describe('@rdfjs/term-set', () => {
       const term1 = rdf.namedNode('http://example.org/1')
       const termset = new TermSet([term0])
 
-      expect(termset.has(term1)).toBe(false)
+      strictEqual(termset.has(term1), false)
     })
   })
 
@@ -186,7 +186,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.values).toBe('function')
+      strictEqual(typeof termset.values, 'function')
     })
 
     it('should return an iterator that contains all terms', () => {
@@ -196,9 +196,9 @@ describe('@rdfjs/term-set', () => {
 
       const values = [...termset.values()]
 
-      expect(values.length).toBe(2)
-      expect(term0.equals(values[0])).toBe(true)
-      expect(term1.equals(values[1])).toBe(true)
+      strictEqual(values.length, 2)
+      strictEqual(term0.equals(values[0]), true)
+      strictEqual(term1.equals(values[1]), true)
     })
   })
 
@@ -206,7 +206,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset.keys).toBe('function')
+      strictEqual(typeof termset.keys, 'function')
     })
 
     it('should return an iterator that contains all terms', () => {
@@ -216,9 +216,9 @@ describe('@rdfjs/term-set', () => {
 
       const values = [...termset.keys()]
 
-      expect(values.length).toBe(2)
-      expect(term0.equals(values[0])).toBe(true)
-      expect(term1.equals(values[1])).toBe(true)
+      strictEqual(values.length, 2)
+      strictEqual(term0.equals(values[0]), true)
+      strictEqual(term1.equals(values[1]), true)
     })
   })
 
@@ -226,7 +226,7 @@ describe('@rdfjs/term-set', () => {
     it('should be a method', () => {
       const termset = new TermSet()
 
-      expect(typeof termset[Symbol.iterator]).toBe('function')
+      strictEqual(typeof termset[Symbol.iterator], 'function')
     })
 
     it('should return an iterator that contains all terms', () => {
@@ -236,9 +236,9 @@ describe('@rdfjs/term-set', () => {
 
       const terms = [...termset]
 
-      expect(terms.length).toBe(2)
-      expect(term0.equals(terms[0])).toBe(true)
-      expect(term1.equals(terms[1])).toBe(true)
+      strictEqual(terms.length, 2)
+      strictEqual(term0.equals(terms[0]), true)
+      strictEqual(term1.equals(terms[1]), true)
     })
   })
 })
