@@ -111,6 +111,18 @@ describe('@rdfjs/term-set', () => {
 
       strictEqual(termset.delete(term), false)
     })
+
+    it('should return false if null is given', () => {
+      const termset = new TermSet()
+
+      strictEqual(termset.delete(null), false)
+    })
+
+    it('should return false if a non-Term object is given', () => {
+      const termset = new TermSet()
+
+      strictEqual(termset.delete({}), false)
+    })
   })
 
   describe('.entries', () => {
@@ -179,6 +191,22 @@ describe('@rdfjs/term-set', () => {
       const termset = new TermSet([term0])
 
       strictEqual(termset.has(term1), false)
+    })
+
+    it('should return false if null is given', () => {
+      const term0 = rdf.namedNode('http://example.org/0')
+      const term1 = rdf.namedNode('http://example.org/1')
+      const termset = new TermSet([term0, term1])
+
+      strictEqual(termset.has(null), false)
+    })
+
+    it('should return false if a non-Term object is given', () => {
+      const term0 = rdf.namedNode('http://example.org/0')
+      const term1 = rdf.namedNode('http://example.org/1')
+      const termset = new TermSet([term0, term1])
+
+      strictEqual(termset.has({}), false)
     })
   })
 
