@@ -32,6 +32,10 @@ class TermSet {
   }
 
   delete (term) {
+    if (!term) {
+      return false
+    }
+
     return this.index.delete(termToNTriples(term))
   }
 
@@ -44,6 +48,10 @@ class TermSet {
   }
 
   has (term) {
+    if (!term) {
+      return false
+    }
+
     return this.index.has(termToNTriples(term))
   }
 
