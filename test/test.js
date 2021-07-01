@@ -1,6 +1,6 @@
-const { strictEqual } = require('assert')
+const { strictEqual, throws } = require('assert')
 const rdf = require('@rdfjs/data-model')
-const { termToNTriples } = require('@rdfjs/to-ntriples')
+const toNT = require('@rdfjs/to-ntriples')
 const { describe, it } = require('mocha')
 const TermSet = require('..')
 
@@ -38,7 +38,20 @@ describe('@rdfjs/term-set', () => {
       termset.add(term)
 
       strictEqual([...termset.index.values()][0], term)
-      strictEqual([...termset.index.keys()][0], termToNTriples(term))
+      strictEqual([...termset.index.keys()][0], toNT(term))
+    })
+
+    it('should add the given Quad term to the index', () => {
+      const subject = rdf.blankNode()
+      const predicate = rdf.namedNode('http://example.org/predicate')
+      const object = rdf.literal('example')
+      const term = rdf.quad(subject, predicate, object)
+      const termset = new TermSet()
+
+      termset.add(term)
+
+      strictEqual([...termset.index.values()][0], term)
+      strictEqual([...termset.index.keys()][0], toNT(term))
     })
 
     it('should keep the term if another one with the same N-Triple representation is added', () => {
@@ -60,6 +73,14 @@ describe('@rdfjs/term-set', () => {
       termset.add(term)
 
       strictEqual(termset.add(term), termset)
+    })
+
+    it('should throw an error if a non-Term object is given', () => {
+      const termset = new TermSet()
+
+      throws(() => {
+        termset.add({})
+      })
     })
   })
 
@@ -96,6 +117,20 @@ describe('@rdfjs/term-set', () => {
 
       strictEqual(termset.index.size, 1)
       strictEqual(term0.equals([...termset.index.values()][0]), true)
+    })
+
+    it('should delete the given Quad term', () => {
+      const subject = rdf.blankNode()
+      const predicate = rdf.namedNode('http://example.org/predicate')
+      const object = rdf.literal('example')
+      const term0 = rdf.quad(subject, predicate, object)
+      const term1 = rdf.namedNode('http://example.org/1')
+      const termset = new TermSet([term0, term1])
+
+      termset.delete(term0)
+
+      strictEqual(termset.index.size, 1)
+      strictEqual(term1.equals([...termset.index.values()][0]), true)
     })
 
     it('should return true if the given term was deleted', () => {
@@ -183,6 +218,17 @@ describe('@rdfjs/term-set', () => {
       const termset = new TermSet([term0, term1])
 
       strictEqual(termset.has(term1), true)
+    })
+
+    it('should return true if the Termset contains the given Quad term', () => {
+      const subject = rdf.blankNode()
+      const predicate = rdf.namedNode('http://example.org/predicate')
+      const object = rdf.literal('example')
+      const term0 = rdf.quad(subject, predicate, object)
+      const term1 = rdf.namedNode('http://example.org/1')
+      const termset = new TermSet([term0, term1])
+
+      strictEqual(termset.has(term0), true)
     })
 
     it('should return false if the Termset does not contain the given term', () => {
