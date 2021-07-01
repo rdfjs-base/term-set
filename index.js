@@ -1,4 +1,12 @@
-const { termToNTriples } = require('@rdfjs/to-ntriples')
+const toNT = require('@rdfjs/to-ntriples')
+
+function quietToNT (term) {
+  try {
+    return toNT(term)
+  } catch (err) {
+    return null
+  }
+}
 
 class TermSet {
   constructor (terms) {
@@ -16,7 +24,7 @@ class TermSet {
   }
 
   add (term) {
-    const key = termToNTriples(term)
+    const key = toNT(term)
 
     if (this.index.has(key)) {
       return this
@@ -36,7 +44,7 @@ class TermSet {
       return false
     }
 
-    return this.index.delete(termToNTriples(term))
+    return this.index.delete(quietToNT(term))
   }
 
   entries () {
@@ -52,7 +60,7 @@ class TermSet {
       return false
     }
 
-    return this.index.has(termToNTriples(term))
+    return this.index.has(quietToNT(term))
   }
 
   values () {
