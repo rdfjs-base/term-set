@@ -1,8 +1,8 @@
-const { strictEqual, throws } = require('assert')
-const rdf = require('@rdfjs/data-model')
-const toNT = require('@rdfjs/to-ntriples')
-const { describe, it } = require('mocha')
-const TermSet = require('..')
+import { strictEqual, throws } from 'assert'
+import rdf from '@rdfjs/data-model'
+import toNT from '@rdfjs/to-ntriples'
+import { describe, it } from 'mocha'
+import TermSet from '../TermSet.js'
 
 describe('@rdfjs/term-set', () => {
   it('should be a constructor', () => {

@@ -1,4 +1,4 @@
-const toNT = require('@rdfjs/to-ntriples')
+import toNT from '@rdfjs/to-ntriples'
 
 function quietToNT (term) {
   try {
@@ -76,4 +76,4 @@ class TermSet {
   }
 }
 
-module.exports = TermSet
+export default TermSet
