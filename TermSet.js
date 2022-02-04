@@ -26,11 +26,9 @@ class TermSet {
   add (term) {
     const key = toNT(term)
 
-    if (this.index.has(key)) {
-      return this
+    if (!this.index.has(key)) {
+      this.index.set(key, term)
     }
-
-    this.index.set(key, term)
 
     return this
   }
