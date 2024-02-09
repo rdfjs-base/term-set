@@ -70,7 +70,7 @@ class TermSet {
   }
 
   [Symbol.iterator] () {
-    return this.values()[Symbol.iterator]()
+    return this.index.values()
   }
 }
 
