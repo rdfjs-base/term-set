@@ -1,5 +1,5 @@
 # @rdfjs/term-set
-[![build status](https://img.shields.io/github/workflow/status/rdfjs-base/term-set/Test)](https://github.com/rdfjs-base/term-set/actions/workflows/test.yaml)
+[![build status](https://img.shields.io/github/actions/workflow/status/rdfjs-base/term-set/test.yaml?branch=master)](https://github.com/rdfjs-base/term-set/actions/workflows/test.yaml)
 [![npm version](https://img.shields.io/npm/v/@rdfjs/term-set.svg)](https://www.npmjs.com/package/@rdfjs/term-set)
 
 A Set for [RDF/JS Terms](http://rdf.js.org/data-model-spec/#term-interface).
