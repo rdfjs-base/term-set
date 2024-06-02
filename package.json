@@ -1,6 +1,6 @@
 {
   "name": "@rdfjs/term-set",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Set for RDF/JS Terms",
   "type": "module",
   "main": "TermSet.js",
